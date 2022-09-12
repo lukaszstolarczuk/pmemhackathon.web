@@ -18,8 +18,9 @@ ENV RPMA_DEPS "\
 	net-tools \
 	rdma-core-devel"
 
-RUN dnf update -y && dnf install -y\
-	$RPMA_DEPS\
+RUN dnf update -y \
+ && dnf install -y \
+	${RPMA_DEPS} \
 	autoconf\
 	automake\
 	bash-completion\
@@ -48,8 +49,6 @@ RUN dnf update -y && dnf install -y\
 	libunwind-devel\
 	make\
 	man\
-	memkind\
-	memkind-devel\
 	nano\
 	ncurses-devel\
 	ndctl-devel\
@@ -86,6 +85,9 @@ RUN /pmdk.sh
 COPY valgrind.sh /
 RUN /valgrind.sh
 
+COPY memkind.sh /
+RUN /memkind.sh
+
 COPY pmemobj-cpp.sh /
 RUN /pmemobj-cpp.sh
 
@@ -107,9 +109,6 @@ RUN /pmemkv-nodejs.sh
 
 COPY pmemkv-ruby.sh /
 RUN /pmemkv-ruby.sh
-
-COPY memkind.sh /
-RUN /memkind.sh
 
 COPY librpma.sh /
 RUN /librpma.sh
